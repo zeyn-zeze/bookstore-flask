@@ -1,0 +1,10 @@
+<h1>Dashboard</h1>
+<p>Welcome, {{ username }}!</p>
+
+{% if role == 'admin' %}
+    <p><strong>You are admin! 🛡️</strong></p>
+{% else %}
+    <p>User account.</p>
+{% endif %}
+
+<a href="{{ url_for('auth.logout') }}">Logout</a>

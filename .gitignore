@@ -1,0 +1,28 @@
+# Python cache and compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+
+# Environment variable files
+*.env
+
+# Flask instance folder
+instance/
+
+# Config files
+config.py
+
+# Uploads and backups
+uploads/
+backups/
+
+# Editor specific
+.vscode/
+
+# OS system files
+.DS_Store
+Thumbs.db
