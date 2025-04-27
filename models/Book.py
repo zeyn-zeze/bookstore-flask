@@ -9,7 +9,8 @@ class Book(db.Model):
     description = db.Column(db.Text, nullable=True)
     price = db.Column(db.Float, nullable=False)
     stock = db.Column(db.Integer, nullable=False)
-    image_filename = db.Column(db.String(255), nullable=True)
+    image_data = db.Column(db.Text, nullable=True)
+
 
     def __repr__(self):
         return f'<Book {self.title}>'

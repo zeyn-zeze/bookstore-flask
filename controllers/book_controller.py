@@ -1,3 +1,4 @@
+import base64
 from flask import Blueprint, render_template, request, redirect, url_for, abort
 from models.Book import Book
 from extensions import db
@@ -31,13 +32,26 @@ def add_book():
         description = request.form.get('description')
         price = float(request.form['price'])
         stock = int(request.form['stock'])
-        image_filename = request.form.get('image_filename', 'default.png') 
-        
-        new_book = Book(title=title, author=author, description=description, price=price, stock=stock, image_filename=image_filename)
+
+        image = request.files['image']
+        if image:
+            image_data = base64.b64encode(image.read()).decode('utf-8')
+        else:
+            image_data = None
+
+        new_book = Book(
+            title=title,
+            author=author,
+            description=description,
+            price=price,
+            stock=stock,
+            image_data=image_data
+        )
         db.session.add(new_book)
         db.session.commit()
-        
+
         return redirect(url_for('book.admin_home'))
+
     return render_template('dashboard/add_book.html')
 
 

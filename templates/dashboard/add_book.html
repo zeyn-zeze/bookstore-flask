@@ -5,7 +5,7 @@
   <textarea name="description" placeholder="Açıklama"></textarea><br>
   <input type="number" step="0.01" name="price" placeholder="Fiyat" required><br>
   <input type="number" name="stock" placeholder="Stok" required><br>
-  <input type="text" name="image_filename" placeholder="Resim Dosya Adı"><br>
+  <input type="file" name="image" accept="image/*" required><br>
   <button type="submit">Ekle</button>
 </form>
 <a href="{{ url_for('book.admin_home') }}">Panele Geri Dön</a>
