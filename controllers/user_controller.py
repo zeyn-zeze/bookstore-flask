@@ -17,11 +17,11 @@ def manage_users():
             if user:
                 db.session.delete(user)
                 db.session.commit()
-            flash('User deleted.', 'success')
+            flash('User deleted successfully.', 'success')
             return redirect(url_for('user.manage_users'))
 
         if 'add_user' in request.form:
-            # Add New User
+            # Add new user
             new_user = User(
                 username=request.form['new_username'],
                 email=request.form['new_email'],
@@ -31,21 +31,24 @@ def manage_users():
             new_user.set_password(request.form['new_password'])
             db.session.add(new_user)
             db.session.commit()
-            flash('New user added.', 'success')
+            flash('New user added successfully.', 'success')
             return redirect(url_for('user.manage_users'))
 
         if 'user_id' in request.form:
-            # Update Existing User
+            # Update existing user
             user = User.query.get(int(request.form['user_id']))
             if user:
                 user.username = request.form['username']
                 user.email = request.form['email']
                 user.phone = request.form['phone']
                 user.role = request.form['role']
+                
+                if request.form.get('password'):  # Yeni şifre yazılmışsa
+                    user.set_password(request.form['password'])
+
                 db.session.commit()
-            flash('User updated.', 'success')
+            flash('User updated successfully.', 'success')
             return redirect(url_for('user.manage_users'))
 
-    # GET request
     users = User.query.all()
     return render_template('dashboard/manage_user.html', users=users)

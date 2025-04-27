@@ -8,8 +8,8 @@
             <th>Email</th>
             <th>Phone</th>
             <th>Role</th>
+            <th>New Password</th>
             <th>Actions</th>
-            <th>Delete</th>
         </tr>
     </thead>
     <tbody>
@@ -21,34 +21,37 @@
                     <input type="hidden" name="user_id" value="{{ user.id }}">
                 </td>
                 <td>
-                    <span class="text" id="username_text_{{ user.id }}">{{ user.username }}</span>
+                    <span class="text">{{ user.username }}</span>
                     <input class="edit" type="text" name="username" value="{{ user.username }}" style="display:none;">
                 </td>
                 <td>
-                    <span class="text" id="email_text_{{ user.id }}">{{ user.email }}</span>
+                    <span class="text">{{ user.email }}</span>
                     <input class="edit" type="email" name="email" value="{{ user.email }}" style="display:none;">
                 </td>
                 <td>
-                    <span class="text" id="phone_text_{{ user.id }}">{{ user.phone }}</span>
+                    <span class="text">{{ user.phone }}</span>
                     <input class="edit" type="text" name="phone" value="{{ user.phone }}" style="display:none;">
                 </td>
                 <td>
-                    <span class="text" id="role_text_{{ user.id }}">{{ user.role }}</span>
+                    <span class="text">{{ user.role }}</span>
                     <select class="edit" name="role" style="display:none;">
                         <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
                         <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
                     </select>
                 </td>
                 <td>
+                    <input class="edit" type="password" name="password" placeholder="New Password (optional)" style="display:none;">
+                </td>
+                <td>
                     <button type="button" onclick="enableEdit({{ user.id }})" id="update_btn_{{ user.id }}">Update</button>
                     <button type="submit" style="display:none;" id="save_btn_{{ user.id }}">Save</button>
                 </td>
             </form>
+
             <form method="POST" action="{{ url_for('user.manage_users') }}" style="display:inline;">
                 <td>
                     <input type="hidden" name="delete_user" value="{{ user.id }}">
                     <button type="submit" onclick="return confirmDelete()" style="background-color:red; color:white;">Delete</button>
-
                 </td>
             </form>
         </tr>
@@ -58,7 +61,6 @@
 
 <br><br>
 
-<!-- Add New User -->
 <h2>Add New User</h2>
 <form method="POST" action="{{ url_for('user.manage_users') }}">
     <table border="1" cellpadding="10" cellspacing="0" style="width: 60%; text-align: center;">
