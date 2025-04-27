@@ -2,6 +2,7 @@ from flask import Flask
 from config import Config
 from extensions import db
 from controllers.auth_controller import auth_bp
+from controllers.book_controller import book_bp
 
 def create_app():
     app = Flask(__name__)
@@ -10,7 +11,7 @@ def create_app():
     db.init_app(app)
 
     app.register_blueprint(auth_bp)
-
+    app.register_blueprint(book_bp)
 
     return app
 

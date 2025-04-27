@@ -1,0 +1,11 @@
+<h1>Yeni Kitap Ekle</h1>
+<form method="post">
+  <input type="text" name="title" placeholder="Kitap Adı" required><br>
+  <input type="text" name="author" placeholder="Yazar" required><br>
+  <textarea name="description" placeholder="Açıklama"></textarea><br>
+  <input type="number" step="0.01" name="price" placeholder="Fiyat" required><br>
+  <input type="number" name="stock" placeholder="Stok" required><br>
+  <input type="text" name="image_filename" placeholder="Resim Dosya Adı"><br>
+  <button type="submit">Ekle</button>
+</form>
+<a href="{{ url_for('book.admin_home') }}">Panele Geri Dön</a>

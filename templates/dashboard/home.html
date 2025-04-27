@@ -1,0 +1,12 @@
+<h1>Admin Kitap Yönetimi</h1>
+<a href="{{ url_for('book.add_book') }}">Yeni Kitap Ekle</a>
+
+<div class="admin-book-list">
+  {% for book in books %}
+    <div class="admin-book-card">
+      <h3>{{ book.title }}</h3>
+      <a href="{{ url_for('book.update_book', book_id=book.id) }}">Güncelle</a>
+      <a href="{{ url_for('book.delete_book', book_id=book.id) }}">Sil</a>
+    </div>
+  {% endfor %}
+</div>

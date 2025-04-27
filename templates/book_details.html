@@ -1,0 +1,9 @@
+<h1>{{ book.title }}</h1>
+<img src="{{ url_for('static', filename='images/' + book.image_filename) }}" width="200">
+<p><strong>Yazar:</strong> {{ book.author }}</p>
+<p><strong>Açıklama:</strong> {{ book.description }}</p>
+<p><strong>Fiyat:</strong> {{ book.price }} ₺</p>
+<p><strong>Stok:</strong> {{ book.stock }}</p>
+
+<button>Sepete Ekle</button>
+<a href="{{ url_for('book.index') }}">Ana Sayfaya Dön</a>

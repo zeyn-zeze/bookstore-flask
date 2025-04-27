@@ -2,11 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from models.User import User
 from extensions import db
 
-auth_bp = Blueprint('auth', __name__)
-
-@auth_bp.route('/')
-def home():
-    return render_template('home.html')
+auth_bp = Blueprint('auth', __name__, url_prefix='/auth')  # artık /auth/... diye prefixli çalışacak
 
 @auth_bp.route('/register', methods=['GET', 'POST'])
 def register():
@@ -28,7 +24,7 @@ def register():
 
         new_user = User(username=username, email=email, phone=phone)
         new_user.set_password(password)
-        new_user.role = 'user' 
+        new_user.role = 'user'
         db.session.add(new_user)
         db.session.commit()
 
@@ -48,13 +44,13 @@ def login():
         if user and user.check_password(password):
             session['user_id'] = user.id
             session['username'] = user.username
-            session['role'] = user.role  
+            session['role'] = user.role
             flash('Successful login!', 'success')
 
             if user.role == 'admin':
-                return redirect(url_for('auth.dashboard'))
+                return redirect(url_for('book.admin_home'))
             else:
-                return redirect(url_for('auth.home'))
+                return redirect(url_for('book.index'))
         else:
             flash('Incorrect username or password.', 'danger')
 
@@ -68,12 +64,12 @@ def dashboard():
 
     if session.get('role') != 'admin':
         flash('Access denied: Admins only!', 'danger')
-        return redirect(url_for('auth.home'))
+        return redirect(url_for('book.index'))
 
-    return render_template('dashboard.html', username=session['username'], role=session.get('role'))
+    return redirect(url_for('book.admin_home'))
 
 @auth_bp.route('/logout')
 def logout():
     session.clear()
     flash('You have been logged out.', 'info')
-    return redirect(url_for('auth.home'))
+    return redirect(url_for('book.index'))

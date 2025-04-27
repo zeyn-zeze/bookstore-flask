@@ -1,0 +1,11 @@
+<h1>Kitap Güncelle</h1>
+<form method="post">
+  <input type="text" name="title" value="{{ book.title }}" required><br>
+  <input type="text" name="author" value="{{ book.author }}" required><br>
+  <textarea name="description">{{ book.description }}</textarea><br>
+  <input type="number" step="0.01" name="price" value="{{ book.price }}" required><br>
+  <input type="number" name="stock" value="{{ book.stock }}" required><br>
+  <input type="text" name="image_filename" value="{{ book.image_filename }}"><br>
+  <button type="submit">Güncelle</button>
+</form>
+<a href="{{ url_for('book.admin_home') }}">Panele Geri Dön</a>
