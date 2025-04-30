@@ -3,6 +3,12 @@
   <input type="text" name="title" placeholder="Book Name" required><br>
   <input type="text" name="author" placeholder="Author" required><br>
   <textarea name="description" placeholder="Description"></textarea><br>
+  <select name="genre" required>
+    <option disabled selected>Select Genre</option>
+    {% for g in genres %}
+      <option value="{{ g }}">{{ g }}</option>
+    {% endfor %}
+  </select><br>
   <input type="number" step="0.01" name="price" placeholder="Fiyat" required><br>
   <input type="number" name="stock" placeholder="Stock" required><br>
   

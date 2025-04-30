@@ -1,4 +1,5 @@
 import base64
+from enums.genre import GENRES
 from flask import Blueprint, render_template, request, redirect, url_for, abort
 from models.Book import Book
 from extensions import db
@@ -30,6 +31,7 @@ def add_book():
         title = request.form['title']
         author = request.form['author']
         description = request.form.get('description')
+        genre = request.form['genre']
         price = float(request.form['price'])
         stock = int(request.form['stock'])
 
@@ -40,6 +42,7 @@ def add_book():
             title=title,
             author=author,
             description=description,
+            genre=genre,
             price=price,
             stock=stock,
             image_data=image_data
@@ -47,7 +50,7 @@ def add_book():
         db.session.add(new_book)
         db.session.commit()
 
-        return redirect(url_for('book.admin_home'))
+        return redirect(url_for('book.admin_home'), genres=GENRES)
 
     return render_template('dashboard/add_book.html')
 
@@ -60,6 +63,7 @@ def update_book(book_id):
         book.title = request.form['title']
         book.author = request.form['author']
         book.description = request.form.get('description')
+        book.genre = request.form['genre']
         book.price = float(request.form['price'])
         book.stock = int(request.form['stock'])
 
@@ -70,7 +74,7 @@ def update_book(book_id):
         db.session.commit()
         return redirect(url_for('book.admin_home'))
 
-    return render_template('dashboard/update_book.html', book=book)
+    return render_template('dashboard/update_book.html', book=book,genres=GENRES)
 
 
 @book_bp.route('/dashboard/delete_book/<int:book_id>')
