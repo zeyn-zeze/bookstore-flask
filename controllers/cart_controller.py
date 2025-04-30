@@ -45,3 +45,23 @@ def remove_item(item_id):
     db.session.commit()
     flash("Book removed from cart.", "success")
     return redirect(url_for('cart.view_cart'))
+
+
+@cart_bp.route('/increase/<int:item_id>', methods=['POST'])
+def increase_quantity(item_id):
+    item = CartItem.query.get_or_404(item_id)
+    if item.user_id == session.get('user_id'):
+        item.quantity += 1
+        db.session.commit()
+    return redirect(url_for('cart.view_cart'))
+
+@cart_bp.route('/decrease/<int:item_id>', methods=['POST'])
+def decrease_quantity(item_id):
+    item = CartItem.query.get_or_404(item_id)
+    if item.user_id == session.get('user_id'):
+        if item.quantity > 1:
+            item.quantity -= 1
+            db.session.commit()
+        else:
+            flash("Minimum quantity is 1", "warning")
+    return redirect(url_for('cart.view_cart'))
