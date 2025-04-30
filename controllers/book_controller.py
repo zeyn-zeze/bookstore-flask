@@ -33,11 +33,8 @@ def add_book():
         price = float(request.form['price'])
         stock = int(request.form['stock'])
 
-        image = request.files['image']
-        if image:
-            image_data = base64.b64encode(image.read()).decode('utf-8')
-        else:
-            image_data = None
+        image = request.files.get('image')
+        image_data = base64.b64encode(image.read()).decode('utf-8') if image else None
 
         new_book = Book(
             title=title,
@@ -58,19 +55,21 @@ def add_book():
 @book_bp.route('/dashboard/update_book/<int:book_id>', methods=['GET', 'POST'])
 def update_book(book_id):
     book = Book.query.get_or_404(book_id)
-    
+
     if request.method == 'POST':
         book.title = request.form['title']
         book.author = request.form['author']
         book.description = request.form.get('description')
         book.price = float(request.form['price'])
         book.stock = int(request.form['stock'])
-        book.image_filename = request.form.get('image_filename', book.image_filename)
+
+        image = request.files.get('image')
+        if image and image.filename != '':
+            book.image_data = base64.b64encode(image.read()).decode('utf-8')
 
         db.session.commit()
-        
         return redirect(url_for('book.admin_home'))
-    
+
     return render_template('dashboard/update_book.html', book=book)
 
 
@@ -79,5 +78,4 @@ def delete_book(book_id):
     book = Book.query.get_or_404(book_id)
     db.session.delete(book)
     db.session.commit()
-    
     return redirect(url_for('book.admin_home'))
