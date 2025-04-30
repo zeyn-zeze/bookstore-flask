@@ -1,9 +1,16 @@
 <h1>{{ book.title }}</h1>
-<img src="{{ url_for('static', filename='images/' + book.image_filename) }}" width="200">
-<p><strong>Yazar:</strong> {{ book.author }}</p>
-<p><strong>Açıklama:</strong> {{ book.description }}</p>
-<p><strong>Fiyat:</strong> {{ book.price }} ₺</p>
-<p><strong>Stok:</strong> {{ book.stock }}</p>
 
-<button>Sepete Ekle</button>
-<a href="{{ url_for('book.index') }}">Ana Sayfaya Dön</a>
+{% if book.image_data %}
+  <img src="data:image/jpeg;base64,{{ book.image_data }}" width="200">
+{% else %}
+  <img src="{{ url_for('static', filename='images/default.png') }}" width="200">
+{% endif %}
+
+
+<p><strong>Author:</strong> {{ book.author }}</p>
+<p><strong>Description:</strong> {{ book.description }}</p>
+<p><strong>Price:</strong> {{ book.price }} ₺</p>
+<p><strong>Stock:</strong> {{ book.stock }}</p>
+
+<button>Add Cart</button>
+<a href="{{ url_for('book.index') }}">Back To Home Page</a>

@@ -1,4 +1,4 @@
-<h1>Kitap Güncelle</h1>
+<h1>Update Book</h1>
 <form method="post">
   <input type="text" name="title" value="{{ book.title }}" required><br>
   <input type="text" name="author" value="{{ book.author }}" required><br>
@@ -8,4 +8,4 @@
   <input type="text" name="image_filename" value="{{ book.image_filename }}"><br>
   <button type="submit">Güncelle</button>
 </form>
-<a href="{{ url_for('book.admin_home') }}">Panele Geri Dön</a>
+<a href="{{ url_for('book.admin_home') }}">Back to Panel</a>
