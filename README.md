@@ -1,14 +1,51 @@
-# Live Reading App
+# 📚 BookCommerce — Online Bookstore Platform
 
-## Short Summary  
-**Live Reading App** is an interactive platform where users can read books simultaneously, discuss them in real-time, and share their thoughts. The app offers synchronized reading rooms, scheduled reading events, and discussion forums to enhance the shared reading experience.
+**BookCommerce** is a full-stack e-commerce web application built with Flask, designed for managing and selling books online. It includes features for users to browse, search, and purchase books, as well as an admin panel for managing inventory and users.
 
-## Key Features  
+---
 
-- **Synchronized Reading Rooms:** Join live rooms to read books together.  
-- **Real-time Discussion:** Chat and share insights while reading.  
-- **Scheduled Reading Events:** Participate in book club sessions and events.  
-- **Personalized Book Lists:** Follow reading schedules and track progress.  
-- **Community Engagement:** Connect with other readers through forums and discussions.  
+## 🚀 Overview
 
+BookCommerce serves as a mini e-commerce platform focused on the online sale of books. The project mimics core functionalities of an online store:
+- User authentication
+- Book catalog display
+- Cart management
+- Admin control panel
+
+
+---
+
+## 🎯 Project Objective
+
+The goal is to develop a scalable, secure, and functional e-commerce site for books, with complete CRUD capabilities and role-based access (admin/user). The system is built for maintainability and can be extended for real-world deployment.
+
+---
+
+## 🧰 Tech Stack
+
+- **Backend**: Python (Flask)
+- **Database**: MySQL + SQLAlchemy ORM
+- **Frontend**: HTML5, CSS3, JavaScript, Jinja2
+- **Tools**: Flask-Migrate, Flask-Login, Bootstrap
+- **Version Control**: Git & GitHub
+- **Project Management**: Jira (task tracking, planning)
+
+---
+
+## 🔐 Core Features
+
+### 🛒 User Features
+- Register/Login/Logout
+- Browse books by genre
+- View book details with images
+- Add/remove items in cart
+
+
+### ⚙️ Admin Features
+- Manage books (Add/Update/Delete)
+- Manage users (CRUD)
+- Upload book images (base64 encoded)
+- Assign user roles (admin/user)
+
+---
 
