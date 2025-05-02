@@ -1,28 +1,87 @@
-<h1>Update Book</h1>
-<form method="post" enctype="multipart/form-data">
-  <input type="text" name="title" value="{{ book.title }}" required><br>
-  <input type="text" name="author" value="{{ book.author }}" required><br>
-  <textarea name="description">{{ book.description }}</textarea><br>
-  <label>Genre:</label><br>
-<select name="genre" required>
-  {% for g in genres %}
-    <option value="{{ g }}" {% if g == book.genre %}selected{% endif %}>{{ g }}</option>
-  {% endfor %}
-</select><br>
-  <input type="number" step="0.01" name="price" value="{{ book.price }}" required><br>
-  <input type="number" name="stock" value="{{ book.stock }}" required><br>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Update Book</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
 
-  
-  {% if book.image_data %}
-    <p>Current Image:</p>
-    <img src="data:image/jpeg;base64,{{ book.image_data }}" width="150"><br>
-  {% endif %}
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="logo">
+      <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo">
+      <h1>Admin Panel</h1>
+    </div>
+    <nav class="navbar">
+      <ul>
+        <li><a href="{{ url_for('book.admin_home') }}">Home</a></li>
+        <li><a href="{{ url_for('book.add_book') }}">Add Book</a></li>
+      </ul>
+    </nav>
+  </header>
 
+  <!-- MAIN CONTENT -->
+  <main>
+    <section style="max-width: 800px; margin: 40px auto;">
+      <h1 style="text-align:center; margin-bottom: 20px;">Update Book</h1>
+      
+      <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="title">Book Name</label>
+          <input type="text" name="title" id="title" value="{{ book.title }}" required>
+        </div>
 
-  <label>Change Image (optional):</label><br>
-  <input type="file" name="image" accept="image/*"><br><br>
+        <div class="form-group">
+          <label for="author">Author</label>
+          <input type="text" name="author" id="author" value="{{ book.author }}" required>
+        </div>
 
-  <button type="submit">Update</button>
-</form>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea name="description" id="description" rows="4">{{ book.description }}</textarea>
+        </div>
 
-<a href="{{ url_for('book.admin_home') }}">Back to Panel</a>
+        <div class="form-group">
+          <label for="genre">Genre</label>
+          <select name="genre" id="genre" required>
+            {% for g in genres %}
+              <option value="{{ g }}" {% if g == book.genre %}selected{% endif %}>{{ g }}</option>
+            {% endfor %}
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="price">Price</label>
+          <input type="number" step="0.01" name="price" id="price" value="{{ book.price }}" required>
+        </div>
+
+        <div class="form-group">
+          <label for="stock">Stock</label>
+          <input type="number" name="stock" id="stock" value="{{ book.stock }}" required>
+        </div>
+
+        {% if book.image_data %}
+          <div class="form-group">
+            <p>Current Image:</p>
+            <img src="data:image/jpeg;base64,{{ book.image_data }}" width="150" style="border-radius: 5px;">
+          </div>
+        {% endif %}
+
+        <div class="form-group">
+          <label for="image">Change Image (optional)</label>
+          <input type="file" name="image" id="image" accept="image/*">
+        </div>
+
+        <button type="submit">Update Book</button>
+      </form>
+
+      <div style="text-align:center; margin-top: 20px;">
+        <a href="{{ url_for('book.admin_home') }}">← Back to Panel</a>
+      </div>
+    </section>
+  </main>
+
+</body>
+</html>
+

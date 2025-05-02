@@ -135,4 +135,58 @@
 a:hover {
  text-decoration: underline;
 }
+/* Add Book form styling */
+.add-book-form {
+  max-width: 500px;
+  margin: 40px auto;
+  background-color: #f4f4f4;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.add-book-form h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #011f3f;
+}
+
+.add-book-form input,
+.add-book-form textarea,
+.add-book-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+.add-book-form button {
+  background-color: #011f3f;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  width: 100%;
+}
+
+.add-book-form button:hover {
+  background-color: #023266;
+}
+
+.add-book-form a {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  color: #011f3f;
+  text-decoration: none;
+}
+
+.add-book-form a:hover {
+  text-decoration: underline;
+}
+
  
