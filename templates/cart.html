@@ -1,34 +1,49 @@
-<h2>My Cart</h2>
-{% if items %}
-  <table border="1" cellpadding="10">
-    <tr>
-      <th>Book</th>
-      <th>Quantity</th>
-      <th>Price</th>    
-      <th>Remove</th>
-    </tr>
-    {% for item in items %}
-    <tr>
-      <td>{{ item.book.title }}</td>
-      <td>
-        <form method="POST" action="{{ url_for('cart.decrease_quantity', item_id=item.id) }}" style="display:inline;">
-          <button type="submit">-</button>
-        </form>
-        {{ item.quantity }}
-        <form method="POST" action="{{ url_for('cart.increase_quantity', item_id=item.id) }}" style="display:inline;">
-          <button type="submit">+</button>
-        </form>
-      </td>
-      <td>{{ item.book.price * item.quantity }} ₺</td>
-      <td>
-        <form method="POST" action="{{ url_for('cart.remove_item', item_id=item.id) }}">
-          <button type="submit">Remove</button>
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
-  <h3>Total: {{ total }} ₺</h3>
-{% else %}
-  <p>Your cart is empty.</p>
-{% endif %}
+{% extends "base.html" %}
+
+{% block title %}My Cart{% endblock %}
+
+{% block content %}
+  <section class="cart-container">
+    <h2 class="cart-title">My Cart</h2>
+
+    {% if items %}
+      <table class="cart-table">
+        <thead>
+          <tr>
+            <th>Book</th>
+            <th>Quantity</th>
+            <th>Price</th>    
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for item in items %}
+          <tr>
+            <td>{{ item.book.title }}</td>
+            <td class="quantity-cell">
+              <form method="POST" action="{{ url_for('cart.decrease_quantity', item_id=item.id) }}" class="inline-form">
+                <button type="submit" class="btn-qty">−</button>
+              </form>
+              {{ item.quantity }}
+              <form method="POST" action="{{ url_for('cart.increase_quantity', item_id=item.id) }}" class="inline-form">
+                <button type="submit" class="btn-qty">+</button>
+              </form>
+            </td>
+            <td>{{ item.book.price * item.quantity }} ₺</td>
+            <td>
+              <form method="POST" action="{{ url_for('cart.remove_item', item_id=item.id) }}">
+                <button type="submit" class="btn-remove">Remove</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <h3 class="cart-total">Total: {{ total }} ₺</h3>
+    {% else %}
+      <p class="empty-cart-message">Your cart is empty.</p>
+    {% endif %}
+  </section>
+{% endblock %}
+
