@@ -1,30 +1,35 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <section class="login-form">
     <h1>Login</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
-          <div style="color: red;">{{ message }}</div>
+          <div class="flash-message">{{ message }}</div>
         {% endfor %}
       {% endif %}
     {% endwith %}
 
     <form method="POST">
-        <label for="username">Username:</label><br>
-        <input type="text" name="username" required><br><br>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required>
+      </div>
 
-        <label for="password">Password:</label><br>
-        <input type="password" name="password" required><br><br>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required>
+      </div>
 
-        <input type="submit" value="Giriş Yap">
+      <button type="submit" class="login-btn">Login</button>
     </form>
 
-    <p>Don't you have an account ? <a href="{{ url_for('auth.register') }}">Register</a></p>
-</body>
-</html>
+    <p class="register-link">
+      New here? Create an account. <a href="{{ url_for('auth.register') }}">Register</a>
+    </p>
+  </section>
+{% endblock %}

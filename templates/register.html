@@ -1,39 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Register</title>
-</head>
-<body>
-    <h1>Register</h1>
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+  <section class="auth-form-container">
+    <h1 class="form-title">Create Your Account</h1>
 
     {% with messages = get_flashed_messages(with_categories=true) %}
       {% if messages %}
         {% for category, message in messages %}
-          <div style="color: red;">{{ message }}</div>
+          <div class="flash-message {{ category }}">{{ message }}</div>
         {% endfor %}
       {% endif %}
     {% endwith %}
 
-    <form method="POST">
-        <label for="username">Username:</label><br>
-        <input type="text" name="username" required><br><br>
+    <form method="POST" class="auth-form">
+      <label for="username">Username:</label>
+      <input type="text" name="username" required>
 
-        <label for="email">Email:</label><br>
-        <input type="email" name="email" required><br><br>
+      <label for="email">Email:</label>
+      <input type="email" name="email" required>
 
-        <label for="password">Password:</label><br>
-        <input type="password" name="password" required><br><br>
+      <label for="password">Password:</label>
+      <input type="password" name="password" required>
 
-        <label for="confirm_password">Confirm Password:</label><br>
-        <input type="password" name="confirm_password" required><br><br>
+      <label for="confirm_password">Confirm Password:</label>
+      <input type="password" name="confirm_password" required>
 
-        <label for="phone">Phone Number:</label><br>
-        <input type="text" name="phone" required><br><br>
+      <label for="phone">Phone Number:</label>
+      <input type="text" name="phone" required>
 
-        <input type="submit" value="Register">
+      <button type="submit" class="btn btn-success">Register</button>
     </form>
 
-    <p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
-</body>
-</html>
+    <p class="form-footer">
+      Already have an account? <a href="{{ url_for('auth.login') }}">Login</a>
+    </p>
+  </section>
+{% endblock %}
+
