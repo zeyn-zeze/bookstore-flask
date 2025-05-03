@@ -188,5 +188,99 @@ a:hover {
 .add-book-form a:hover {
   text-decoration: underline;
 }
+/* Manage user styling */
+.form-container {
+  max-width: 900px;
+  margin: 50px auto;
+  background-color: #f4f4f4;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-container {
+  display: flex;
+  gap: 30px;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.profile-img-container {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.form-fields input,
+.form-fields select,
+.form-fields button {
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-top: 5px;
+}
+
+.form-fields input,
+.form-fields select {
+  width: 100%;
+}
+
+label {
+  font-weight: bold;
+
+}
+/* Save button */
+.save-btn {
+  background-color: #28a745; 
+  color: white;
+  padding: 10px 15px; 
+  border: none; 
+  border-radius: 6px; 
+  cursor: pointer;
+  width: 150px;
+  margin-top: 10px;
+}
+
+.save-btn:hover {
+  background-color: #218838; 
+  transform: scale(1.05);
+}
+/* Delete button */
+.delete-btn {
+  background-color: #dc3545; 
+  color: white; 
+  padding: 10px 15px; 
+  border: none; 
+  border-radius: 6px;
+  cursor: pointer;
+  width: 150px;
+  margin-top: 10px;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+  transform: scale(1.05); 
+}
+
+.profile-img-container input {
+  display: none;
+}
 
  

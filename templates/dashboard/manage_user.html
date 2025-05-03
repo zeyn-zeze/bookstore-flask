@@ -1,103 +1,68 @@
-<h1>User Management</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Management</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}?v=1.0">
+</head>
+<body>
 
-<table border="1" cellpadding="10" cellspacing="0" style="width: 100%; text-align: center; margin-bottom: 10px;">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Phone</th>
-            <th>Role</th>
-            <th>New Password</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for user in users %}
-        <tr id="row_{{ user.id }}">
-            <form method="POST" action="{{ url_for('user.manage_users') }}" id="form_{{ user.id }}">
-                <td>
-                    {{ user.id }}
-                    <input type="hidden" name="user_id" value="{{ user.id }}">
-                </td>
-                <td>
-                    <span class="text">{{ user.username }}</span>
-                    <input class="edit" type="text" name="username" value="{{ user.username }}" style="display:none;">
-                </td>
-                <td>
-                    <span class="text">{{ user.email }}</span>
-                    <input class="edit" type="email" name="email" value="{{ user.email }}" style="display:none;">
-                </td>
-                <td>
-                    <span class="text">{{ user.phone }}</span>
-                    <input class="edit" type="text" name="phone" value="{{ user.phone }}" style="display:none;">
-                </td>
-                <td>
-                    <span class="text">{{ user.role }}</span>
-                    <select class="edit" name="role" style="display:none;">
-                        <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
-                        <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
-                    </select>
-                </td>
-                <td>
-                    <input class="edit" type="password" name="password" placeholder="New Password (optional)" style="display:none;">
-                </td>
-                <td>
-                    <button type="button" onclick="enableEdit({{ user.id }})" id="update_btn_{{ user.id }}">Update</button>
-                    <button type="submit" style="display:none;" id="save_btn_{{ user.id }}">Save</button>
-                </td>
-            </form>
+  <!-- Header -->
+  <div class="site-header">
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/book.png') }}" alt="Logo" class="logo-icon">
+      <h1>User Management</h1>
+    </div>
+    <div class="navbar">
+      <ul>
+        <li><a href="{{ url_for('book.admin_home') }}">Home</a></li>
+        <li><a href="{{ url_for('book.add_book') }}">Add Book</a></li>
+        <li><a href="{{ url_for('book.update_book') }}">Update Book</a></li>
+        <li><a href="{{ url_for('book.manage_user') }}">User Settings</a></li>
+      </ul>
+    </div>
+  </div>
 
-            <form method="POST" action="{{ url_for('user.manage_users') }}" style="display:inline;">
-                <td>
-                    <input type="hidden" name="delete_user" value="{{ user.id }}">
-                    <button type="submit" onclick="return confirmDelete()" style="background-color:red; color:white;">Delete</button>
-                </td>
-            </form>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+  <!-- User Management Form -->
+  <div class="form-container">
+    <form class="admin-add-user-form" method="POST" action="{{ url_for('user.manage_users') }}">
+      <div class="profile-container">
+        <div class="profile-img-container">
+          <img src="{{ user.profile_image }}" alt="Profile" class="profile-img">
+          <input type="file" name="profile_image" class="profile-img-input" />
+        </div>
+        <div class="form-fields">
+          <label for="username">Username</label>
+          <input type="text" name="username" id="username" value="{{ user.username }}">
 
-<br><br>
+          <label for="email">Email</label>
+          <input type="email" name="email" id="email" value="{{ user.email }}">
 
-<h2>Add New User</h2>
-<form method="POST" action="{{ url_for('user.manage_users') }}">
-    <table border="1" cellpadding="10" cellspacing="0" style="width: 60%; text-align: center;">
-        <tr style="background-color: #e0f7fa;">
-            <td><input type="text" name="new_username" placeholder="New Username" required></td>
-            <td><input type="email" name="new_email" placeholder="New Email" required></td>
-            <td><input type="text" name="new_phone" placeholder="New Phone"></td>
-            <td>
-                <select name="new_role">
-                    <option value="user" selected>User</option>
-                    <option value="admin">Admin</option>
-                </select>
-            </td>
-            <td><input type="password" name="new_password" placeholder="Password" required></td>
-            <td><button type="submit" name="add_user" value="true">Add</button></td>
-        </tr>
-    </table>
-</form>
+          <label for="phone">Phone</label>
+          <input type="text" name="phone" id="phone" value="{{ user.phone }}">
 
-<!-- JavaScript -->
-<script>
-function enableEdit(userId) {
-    const row = document.getElementById('row_' + userId);
-    const updateBtn = document.getElementById('update_btn_' + userId);
-    const saveBtn = document.getElementById('save_btn_' + userId);
+          <label for="first_name">First Name</label>
+          <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}">
 
-    const texts = row.querySelectorAll('.text');
-    const edits = row.querySelectorAll('.edit');
+          <label for="last_name">Last Name</label>
+          <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}">
 
-    texts.forEach(t => t.style.display = 'none');
-    edits.forEach(e => e.style.display = 'inline-block');
+          <label for="password">New Password</label>
+          <input type="password" name="password" id="password" placeholder="New Password">
 
-    updateBtn.style.display = 'none';
-    saveBtn.style.display = 'inline-block';
-}
+          <label for="role">Role</label>
+          <select name="role" id="role">
+            <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
+            <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+          </select>
+          <button type="submit" class="save-btn">Save</button>
+          <input type="hidden" name="delete_user" value="{{ user.id }}">
+          <button type="submit" class="delete-btn" onclick="return confirmDelete()">Delete</button>
+        </div>
+      </div>
+    </form>
+  </div>
 
-function confirmDelete() {
-    return confirm('Are you sure you want to delete this user?');
-}
-</script>
+</body>
+</html>
