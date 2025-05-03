@@ -1,47 +1,82 @@
-
 {% extends "base.html" %}
 
-{% block title %}Manage User{% endblock %}
+{% block title %}Book Details{% endblock %}
 
 {% block content %}
-  <div class="form-container">
-    <form class="admin-add-user-form" method="POST" action="{{ url_for('user.manage_users') }}">
-      <div class="profile-container">
-        <div class="profile-img-container">
-          <img src="{{ user.profile_image }}" alt="Profile" class="profile-img">
-          <input type="file" name="profile_image" class="profile-img-input" />
-        </div>
-        <div class="form-fields">
-          <label for="username">Username</label>
-          <input type="text" name="username" id="username" value="{{ user.username }}">
+<h1>User Management</h1>
+<table border="1" cellpadding="10" cellspacing="0" style="width: 100%; text-align: center; margin-bottom: 10px;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Profile Image</th>
+            <th>New Password</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr id="row_{{ user.id }}">
+            <form method="POST" action="{{ url_for('user.manage_users') }}">
+                <td>
+                    {{ user.id }}
+                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                </td>
+                <td>
+                    <span class="text">{{ user.username }}</span>
+                    <input class="edit" type="text" name="username" value="{{ user.username }}" style="display:none;">
+                </td>
+                <td>
+                    <span class="text">{{ user.email }}</span>
+                    <input class="edit" type="email" name="email" value="{{ user.email }}" style="display:none;">
+                </td>
+                <td>
+                    <span class="text">{{ user.phone }}</span>
+                    <input class="edit" type="text" name="phone" value="{{ user.phone }}" style="display:none;">
+                </td>
+                <td>
+                    <span class="text">{{ user.first_name }}</span>
+                    <input class="edit" type="text" name="first_name" value="{{ user.first_name }}" style="display:none;">
+                </td>
+                <td>
+                    <span class="text">{{ user.last_name }}</span>
+                    <input class="edit" type="text" name="last_name" value="{{ user.last_name }}" style="display:none;">
+                </td>
+                <td>
+                    {% if user.profile_image %}
+                        <img src="{{ user.profile_image }}" alt="Profile" width="50" height="50"><br>
+                    {% endif %}
+                    <input class="edit" type="url" name="profile_image" value="{{ user.profile_image }}" style="display:none;" placeholder="Image URL">
+                </td>
+                <td>
+                    <input class="edit" type="password" name="password" placeholder="New Password" style="display:none;">
+                </td>
+                <td>
+                    <span class="text">{{ user.role }}</span>
+                    <select class="edit" name="role" style="display:none;">
+                        <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
+                        <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="button" onclick="enableEdit({{ user.id }})" id="update_btn_{{ user.id }}">Update</button>
+                    <button type="submit" style="display:none;" id="save_btn_{{ user.id }}">Save</button>
+                </td>
+            </form>
 
-          <label for="email">Email</label>
-          <input type="email" name="email" id="email" value="{{ user.email }}">
-
-          <label for="phone">Phone</label>
-          <input type="text" name="phone" id="phone" value="{{ user.phone }}">
-
-          <label for="first_name">First Name</label>
-          <input type="text" name="first_name" id="first_name" value="{{ user.first_name }}">
-
-          <label for="last_name">Last Name</label>
-          <input type="text" name="last_name" id="last_name" value="{{ user.last_name }}">
-
-          <label for="password">New Password</label>
-          <input type="password" name="password" id="password" placeholder="New Password">
-
-          <label for="role">Role</label>
-          <select name="role" id="role">
-            <option value="user" {% if user.role == 'user' %}selected{% endif %}>User</option>
-            <option value="admin" {% if user.role == 'admin' %}selected{% endif %}>Admin</option>
-          </select>
-          <button type="submit" class="save-btn">Save</button>
-          <input type="hidden" name="delete_user" value="{{ user.id }}">
-          <button type="submit" class="delete-btn" onclick="return confirmDelete()">Delete</button>
-        </div>
-      </div>
-    </form>
-  </div>
+            <form method="POST" action="{{ url_for('user.manage_users') }}" style="display:inline;">
+                <td>
+                    <input type="hidden" name="delete_user" value="{{ user.id }}">
+                    <button type="submit" onclick="return confirmDelete()" style="background-color:red; color:white;">Delete</button>
+                </td>
+            </form>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 {% endblock %}
-
-
