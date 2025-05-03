@@ -11,17 +11,31 @@
   <header class="site-header">
     <div class="logo">
       <img src="{{ url_for('static', filename='images/book.png') }}" alt="Logo">
-      <h1>Admin Panel</h1>
+      <h1>Book Store</h1>
     </div>
+
     <nav class="navbar">
       <ul>
-        <li><a href="{{ url_for('book.admin_home') }}">Home</a></li>
-        <li><a href="{{ url_for('book.add_book') }}">Add Book</a></li>
+        {% if session.get('user_id') %}
+          {% if session.get('role') == 'admin' %}
+            <li><a href="{{ url_for('book.admin_home') }}">Admin Home</a></li>
+            <li><a href="{{ url_for('book.add_book') }}">Add Book</a></li>
+            <li><a href="{{ url_for('user.manage_users') }}">Users</a></li>
+          {% else %}
+            <li><a href="{{ url_for('book.index') }}">Home</a></li>
+            <li><a href="{{ url_for('cart.view_cart') }}">My Cart</a></li>
+          {% endif %}
+          <li><a href="{{ url_for('auth.logout') }}">Logout ({{ session['username'] }})</a></li>
+        {% else %}
+          <li><a href="{{ url_for('book.index') }}">Home</a></li>
+          <li><a href="{{ url_for('auth.login') }}">Login</a></li>
+          <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+        {% endif %}
       </ul>
     </nav>
   </header>
 
-  
+  <!-- CONTENT -->
   <main class="main-content">
     {% block content %}
     {% endblock %}
@@ -29,6 +43,4 @@
 
   <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
-
-
 </html>

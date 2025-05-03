@@ -18,7 +18,9 @@
         </a>
         <p><strong>Author:</strong> {{ book.author }}</p>
         <p><strong>Price:</strong> {{ book.price }} ₺</p>
-        <a class="details-button" href="{{ url_for('book.book_details', book_id=book.id) }}">Details</a>
+        {% if session.get('user_id') %}
+          <a class="details-button" href="{{ url_for('book.book_details', book_id=book.id) }}">Details</a>
+        {% endif %}
       </div>
     {% endfor %}
   </div>

@@ -292,37 +292,58 @@ a:hover {
 
 /* Book Details Container */
 .book-details {
-  max-width: 800px;
+  max-width: 900px;
   margin: 40px auto;
   background-color: #f4f4f4;
   border-radius: 12px;
   padding: 30px;
-  box-shadow: 0 0 12px rgba(0,0,0,0.1);
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
   font-family: Arial, sans-serif;
-}
-
-.book-details h1 {
-  color: #011f3f;
-  margin-bottom: 20px;
-  text-align: center;
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
 }
 
 .book-details img {
-  display: block;
-  margin: 0 auto 20px auto;
-  border-radius: 8px;
-  max-width: 100%;
+  width: 300px;
   height: auto;
+  border-radius: 8px;
+  object-fit: cover;
 }
 
-.book-details p {
+.book-info {
+  flex: 1;
+}
+
+.book-info h1 {
+  color: #011f3f;
+  margin-bottom: 20px;
+  font-size: 28px;
+}
+
+.book-info p {
   font-size: 16px;
   margin: 10px 0;
   color: #333;
 }
 
-.book-details strong {
+.book-info strong {
   color: #011f3f;
+}
+
+.book-info form {
+  margin-top: 20px;
+}
+
+.book-info a {
+  display: inline-block;
+  margin-top: 15px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.book-info a:hover {
+  text-decoration: underline;
 }
 
 /* Add to Cart Button */

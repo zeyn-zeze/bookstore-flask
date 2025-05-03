@@ -26,7 +26,7 @@
           <button type="submit" class="add-cart-btn">Add to Cart</button>
         </form>
 
-        <a href="{{ url_for('book.index') }}" class="back-link">← Back To Home Page</a>
+        <a href="{{ url_for('admin.home') if session.get('user_role') == 'admin' else url_for('book.index') }}">← Back to Home Page</a>
       </div>
     </div>
   </section>
