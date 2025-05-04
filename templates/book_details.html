@@ -3,31 +3,32 @@
 {% block title %}Book Details{% endblock %}
 
 {% block content %}
- <h1>Book Details</h1>
-  <section class="book-details-container">
-    <div class="book-details-card">
-      <div class="book-image">
-        {% if book.image_data %}
-          <img src="data:image/jpeg;base64,{{ book.image_data }}" alt="{{ book.title }}">
-        {% else %}
-          <img src="{{ url_for('static', filename='images/default.png') }}" alt="Default Image">
-        {% endif %}
-      </div>
+  
 
-      <div class="book-info">
-        <h1>{{ book.title }}</h1>
-        <p><strong>Author:</strong> {{ book.author }}</p>
-        <p><strong>Description:</strong> {{ book.description }}</p>
-        <p><strong>Genre:</strong> {{ book.genre }}</p>
-        <p><strong>Price:</strong> {{ book.price }} ₺</p>
-        <p><strong>Stock:</strong> {{ book.stock }}</p>
+  <section class="book-details-flex">
+    <div class="book-image">
+      {% if book.image_data %}
+        <img src="data:image/jpeg;base64,{{ book.image_data }}" alt="{{ book.title }}">
+      {% else %}
+        <img src="{{ url_for('static', filename='images/default.png') }}" alt="Default Image">
+      {% endif %}
+    </div>
 
-        <form method="POST" action="{{ url_for('cart.add_to_cart', book_id=book.id) }}">
-          <button type="submit" class="add-cart-btn">Add to Cart</button>
-        </form>
+    <div class="book-info">
+      <h1>{{ book.title }}</h1>
+      <p><strong>Author:</strong> {{ book.author }}</p>
+      <p><strong>Description:</strong> {{ book.description }}</p>
+      <p><strong>Genre:</strong> {{ book.genre }}</p>
+      <p><strong>Price:</strong> {{ book.price }} ₺</p>
+      <p><strong>Stock:</strong> {{ book.stock }}</p>
 
-        <a href="{{ url_for('admin.home') if session.get('user_role') == 'admin' else url_for('book.index') }}">← Back to Home Page</a>
-      </div>
+      <form method="POST" action="{{ url_for('cart.add_to_cart', book_id=book.id) }}">
+        <button type="submit" class="add-cart-btn">Add to Cart</button>
+      </form>
+
+      <a class="back-link" href="{{ url_for('admin.home') if session.get('user_role') == 'admin' else url_for('book.index') }}">
+        ← Back to Home Page
+      </a>
     </div>
   </section>
 {% endblock %}
