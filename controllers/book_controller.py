@@ -50,9 +50,10 @@ def add_book():
         db.session.add(new_book)
         db.session.commit()
 
-        return redirect(url_for('book.admin_home'), genres=GENRES)
+        return redirect(url_for('book.admin_home'))  
 
-    return render_template('dashboard/add_book.html')
+    return render_template('dashboard/add_book.html', genres=GENRES)  
+
 
 
 @book_bp.route('/dashboard/update_book/<int:book_id>', methods=['GET', 'POST'])
