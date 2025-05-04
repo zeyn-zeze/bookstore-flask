@@ -1,4 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import Blueprint, abort, render_template, request, redirect, url_for, flash, session
+from models.Order import Order
 from models.User import User
 from extensions import db
 
@@ -52,3 +53,14 @@ def manage_users():
 
     users = User.query.all()
     return render_template('dashboard/manage_user.html', users=users)
+
+@user_bp.route('/info')
+def user_info():
+    user_id = session.get('user_id')
+    if not user_id:
+        flash("Please log in to view your profile.", "warning")
+        return redirect(url_for('auth.login'))
+
+    user = User.query.get_or_404(user_id)
+    orders = Order.query.filter_by(user_id=user_id).order_by(Order.ordered_at.desc()).all()
+    return render_template("user_info.html", user=user, orders=orders)

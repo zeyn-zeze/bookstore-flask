@@ -41,6 +41,17 @@
       </table>
 
       <h3 class="cart-total">Total: {{ total }} ₺</h3>
+
+<form method="POST" action="{{ url_for('cart.checkout') }}">
+  <button type="submit" class="checkout-btn">Checkout</button>
+</form>
+
+{% if checkout_success %}
+  <script>
+    alert("Satın alma işleminiz tamamlanmıştır!");
+  </script>
+{% endif %}
+
     {% else %}
       <p class="empty-cart-message">Your cart is empty.</p>
     {% endif %}

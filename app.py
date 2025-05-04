@@ -5,6 +5,7 @@ from controllers.auth_controller import auth_bp
 from controllers.book_controller import book_bp
 from controllers.user_controller import user_bp
 from controllers.cart_controller import cart_bp
+from controllers.order_controller import order_bp  
 
 
 def create_app():
@@ -18,6 +19,7 @@ def create_app():
     app.register_blueprint(book_bp)
     app.register_blueprint(user_bp)
     app.register_blueprint(cart_bp)
+    app.register_blueprint(order_bp)
 
     return app
 

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}User Info{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+
+  <!-- Kullanıcı Bilgileri -->
+  <div class="user-info-box">
+    <h2>User Information</h2>
+    <p><strong>Username:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+  </div>
+
+  <!-- Sipariş Geçmişi -->
+  <div class="order-history-section">
+    <h2>Order History</h2>
+
+    {% if orders %}
+      {% for order in orders %}
+      <div class="order-box">
+        {% for item in order.items %}
+          <p><strong>Book Title:</strong> {{ item.book.title }}</p>
+          <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+          <p><strong>Total:</strong> {{ item.total_price }} ₺</p>
+          {% if not loop.last %}
+            <hr>
+          {% endif %}
+        {% endfor %}
+        <p><strong>Date:</strong> {{ order.ordered_at.strftime('%Y-%m-%d %H:%M') }}</p>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="empty-cart-message">You have no past orders.</p>
+    {% endif %}
+
+  </div>
+
+</div>
+{% endblock %}

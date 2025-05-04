@@ -24,6 +24,8 @@
           {% else %}
             <li><a href="{{ url_for('book.index') }}">Home</a></li>
             <li><a href="{{ url_for('cart.view_cart') }}">My Cart</a></li>
+            <li><a href="{{ url_for('user.user_info') }}">My Account</a></li>
+
           {% endif %}
           <li><a href="{{ url_for('auth.logout') }}">Logout ({{ session['username'] }})</a></li>
         {% else %}

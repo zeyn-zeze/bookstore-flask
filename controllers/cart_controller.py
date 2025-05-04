@@ -1,7 +1,9 @@
-from flask import Blueprint, request, redirect, url_for, flash, session, render_template
+from flask import Blueprint, abort, request, redirect, url_for, flash, session, render_template
 from models.CartItem import CartItem
 from models.Book import Book
 from extensions import db
+from models.Order import Order
+from models.OrderItem import OrderItem
 
 cart_bp = Blueprint('cart', __name__, url_prefix='/cart')
 
@@ -65,3 +67,38 @@ def decrease_quantity(item_id):
         else:
             flash("Minimum quantity is 1", "warning")
     return redirect(url_for('cart.view_cart'))
+
+
+@cart_bp.route('/checkout', methods=['POST'])
+def checkout():
+    user_id = session.get('user_id')
+    if not user_id:
+        abort(403)
+
+    items = CartItem.query.filter_by(user_id=user_id).all()
+    if not items:
+        flash("Your cart is empty.", "warning")
+        return redirect(url_for('cart.view_cart'))
+
+    # Yeni siparişi oluştur
+    order = Order(user_id=user_id)
+    db.session.add(order)
+    db.session.flush()  # order.id'ye ulaşmak için
+
+    # Her bir sepet öğesini sipariş öğesine çevir
+    for item in items:
+        order_item = OrderItem(
+            order_id=order.id,
+            book_id=item.book_id,
+            quantity=item.quantity,
+            total_price=item.book.price * item.quantity
+        )
+        db.session.add(order_item)
+        db.session.delete(item)  # Sepetten sil
+
+    db.session.commit()
+    flash("Purchase completed successfully!", "success")
+    return render_template("cart.html", items=[], total=0, checkout_success=True)
+
+
+
