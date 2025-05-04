@@ -9,8 +9,22 @@ book_bp = Blueprint('book', __name__)
 
 @book_bp.route('/')
 def index():
-    books = Book.query.all()
-    return render_template('index.html', books=books)
+    search_query = request.args.get('search', '')
+    selected_genre = request.args.get('genre', '')
+
+    query = Book.query
+
+    if selected_genre:
+        query = query.filter_by(genre=selected_genre)
+
+    if search_query:
+        query = query.filter(Book.title.ilike(f'%{search_query}%'))
+
+    books = query.all()
+
+    return render_template('index.html', books=books, genres=GENRES, selected_genre=selected_genre, search_query=search_query)
+
+
 
 
 @book_bp.route('/book_details/<int:book_id>')

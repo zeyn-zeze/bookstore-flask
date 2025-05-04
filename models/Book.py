@@ -1,6 +1,7 @@
 from extensions import db
 from enums.genre import genre_enum
 from sqlalchemy.dialects.mysql import LONGTEXT
+
 class Book(db.Model):
     __tablename__ = 'books'
 
