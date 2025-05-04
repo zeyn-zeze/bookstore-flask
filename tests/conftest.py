@@ -15,7 +15,7 @@ def app():
     app = create_app()
     app.config.update({
         "TESTING": True,
-        "SQLALCHEMY_DATABASE_URI":"mysql+pymysql://root:password@localhost/book_store_test", 
+        "SQLALCHEMY_DATABASE_URI":"mysql+pymysql://root:Zeynep5703?@localhost/book_store_test", 
         "WTF_CSRF_ENABLED": False,  
     })
 

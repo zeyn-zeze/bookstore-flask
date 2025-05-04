@@ -4,7 +4,7 @@ from extensions import db
 
 
 @pytest.fixture
-def book_factory(app):  # sadece app kullan, client değil!
+def book_factory(app):  
     def _create(title="Test Book", genre="Fiction", author="Author", price=10.0, stock=5):
         book = Book(
             title=title,

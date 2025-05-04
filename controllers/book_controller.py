@@ -1,9 +1,8 @@
 import base64
 from enums.genre import GENRES
-from flask import Blueprint, render_template, request, redirect, url_for, abort
+from flask import Blueprint, render_template, request, redirect, url_for, abort, session
 from models.Book import Book
 from extensions import db
-from flask import session, abort 
 
 book_bp = Blueprint('book', __name__)
 
@@ -26,11 +25,11 @@ def index():
     return render_template('index.html', books=books, genres=GENRES, selected_genre=selected_genre, search_query=search_query)
 
 
-
-
 @book_bp.route('/book_details/<int:book_id>')
 def book_details(book_id):
-    book = Book.query.get_or_404(book_id)
+    book = db.session.get(Book, book_id)
+    if book is None:
+        abort(404)
     return render_template('book_details.html', book=book)
 
 
@@ -69,17 +68,18 @@ def add_book():
         db.session.add(new_book)
         db.session.commit()
 
-        return redirect(url_for('book.admin_home'))  
+        return redirect(url_for('book.admin_home'))
 
-    return render_template('dashboard/add_book.html', genres=GENRES)  
-
+    return render_template('dashboard/add_book.html', genres=GENRES)
 
 
 @book_bp.route('/dashboard/update_book/<int:book_id>', methods=['GET', 'POST'])
 def update_book(book_id):
     if session.get('role') != 'admin':
         abort(403)
-    book = Book.query.get_or_404(book_id)
+    book = db.session.get(Book, book_id)
+    if book is None:
+        abort(404)
 
     if request.method == 'POST':
         book.title = request.form['title']
@@ -96,14 +96,17 @@ def update_book(book_id):
         db.session.commit()
         return redirect(url_for('book.admin_home'))
 
-    return render_template('dashboard/update_book.html', book=book,genres=GENRES)
+    return render_template('dashboard/update_book.html', book=book, genres=GENRES)
 
 
 @book_bp.route('/dashboard/delete_book/<int:book_id>')
 def delete_book(book_id):
     if session.get('role') != 'admin':
         abort(403)
-    book = Book.query.get_or_404(book_id)
+    book = db.session.get(Book, book_id)
+    if book is None:
+        abort(404)
+
     db.session.delete(book)
     db.session.commit()
     return redirect(url_for('book.admin_home'))
