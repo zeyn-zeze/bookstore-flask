@@ -3,6 +3,7 @@ from enums.genre import GENRES
 from flask import Blueprint, render_template, request, redirect, url_for, abort
 from models.Book import Book
 from extensions import db
+from flask import session, abort 
 
 book_bp = Blueprint('book', __name__)
 
@@ -35,12 +36,16 @@ def book_details(book_id):
 
 @book_bp.route('/dashboard/')
 def admin_home():
+    if session.get('role') != 'admin':
+        abort(403)
     books = Book.query.all()
     return render_template('dashboard/home.html', books=books)
 
 
 @book_bp.route('/dashboard/add_book', methods=['GET', 'POST'])
 def add_book():
+    if session.get('role') != 'admin':
+        abort(403)
     if request.method == 'POST':
         title = request.form['title']
         author = request.form['author']
@@ -72,6 +77,8 @@ def add_book():
 
 @book_bp.route('/dashboard/update_book/<int:book_id>', methods=['GET', 'POST'])
 def update_book(book_id):
+    if session.get('role') != 'admin':
+        abort(403)
     book = Book.query.get_or_404(book_id)
 
     if request.method == 'POST':
@@ -94,6 +101,8 @@ def update_book(book_id):
 
 @book_bp.route('/dashboard/delete_book/<int:book_id>')
 def delete_book(book_id):
+    if session.get('role') != 'admin':
+        abort(403)
     book = Book.query.get_or_404(book_id)
     db.session.delete(book)
     db.session.commit()

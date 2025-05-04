@@ -7,6 +7,8 @@ user_bp = Blueprint('user', __name__, url_prefix='/dashboard/users')
 
 @user_bp.route('/', methods=['GET', 'POST'])
 def manage_users():
+    if session.get('role') != 'admin':
+        abort(403)
     if 'user_id' not in session or session.get('role') != 'admin':
         flash('Only admins can access this page.', 'danger')
         return redirect(url_for('auth.login'))
