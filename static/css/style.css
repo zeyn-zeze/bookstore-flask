@@ -975,3 +975,93 @@ a:hover {
   margin: 6px 0;
   color: #333;
 }
+/* User Management Table Styling */
+.user-management-container {
+  max-width: 1100px;
+  margin: 40px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.user-management-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #0a2f5c;
+  font-size: 32px;
+  border-bottom: 2px solid #ccc;
+  padding-bottom: 10px;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.user-table thead {
+  background-color: #003366;
+  color: #ffffff;
+}
+
+.user-table th,
+.user-table td {
+  padding: 14px 12px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 15px;
+}
+
+.user-table tr:hover {
+  background-color: #f4f8fb;
+}
+
+.user-table input,
+.user-table select {
+  width: 90%;
+  padding: 6px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.user-table .text {
+  font-weight: 500;
+}
+
+.user-table button {
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.user-table .update-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.user-table .update-btn:hover {
+  background-color: #0056b3;
+}
+
+.user-table .save-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.user-table .save-btn:hover {
+  background-color: #218838;
+}
+
+.user-table .delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.user-table .delete-btn:hover {
+  background-color: #b71c1c;
+}

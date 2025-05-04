@@ -4,9 +4,6 @@
 
 {% block content %}
 
-  <h1>Admin Book Manage Panel</h1>
-  <a href="{{ url_for('book.add_book') }}" style="display: inline-block; margin-bottom: 20px; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 5px;">Add New Book</a>
-
   <div class="book-list">
     {% for book in books %}
       <div class="book-card">

@@ -7,8 +7,6 @@ user_bp = Blueprint('user', __name__, url_prefix='/dashboard/users')
 
 @user_bp.route('/', methods=['GET', 'POST'])
 def manage_users():
-    if session.get('role') != 'admin':
-        abort(403)
     if 'user_id' not in session or session.get('role') != 'admin':
         flash('Only admins can access this page.', 'danger')
         return redirect(url_for('auth.login'))
@@ -24,11 +22,11 @@ def manage_users():
             return redirect(url_for('user.manage_users'))
 
         if 'add_user' in request.form:
-            # Add new user
             new_user = User(
                 username=request.form['new_username'],
                 email=request.form['new_email'],
                 phone=request.form['new_phone'],
+                address=request.form.get('new_address'),
                 role=request.form['new_role']
             )
             new_user.set_password(request.form['new_password'])
@@ -38,23 +36,22 @@ def manage_users():
             return redirect(url_for('user.manage_users'))
 
         if 'user_id' in request.form:
-            # Update existing user
             user = User.query.get(int(request.form['user_id']))
             if user:
                 user.username = request.form['username']
                 user.email = request.form['email']
                 user.phone = request.form['phone']
+                user.address = request.form['address']
                 user.role = request.form['role']
-                
-                if request.form.get('password'):  # Yeni şifre yazılmışsa
+                if request.form.get('password'):
                     user.set_password(request.form['password'])
-
                 db.session.commit()
             flash('User updated successfully.', 'success')
             return redirect(url_for('user.manage_users'))
 
     users = User.query.all()
     return render_template('dashboard/manage_user.html', users=users)
+
 
 @user_bp.route('/info')
 def user_info():

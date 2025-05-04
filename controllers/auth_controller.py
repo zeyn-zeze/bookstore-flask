@@ -12,6 +12,7 @@ def register():
         password = request.form['password']
         confirm_password = request.form['confirm_password']
         phone = request.form['phone']
+        address = request.form.get('address')
 
         if password != confirm_password:
             flash('Passwords do not match.', 'danger')
@@ -22,7 +23,7 @@ def register():
             flash('Username or email already registered.', 'danger')
             return redirect(url_for('auth.register'))
 
-        new_user = User(username=username, email=email, phone=phone)
+        new_user = User(username=username, email=email, phone=phone,address=address)
         new_user.set_password(password)
         new_user.role = 'user'
         db.session.add(new_user)
@@ -74,3 +75,4 @@ def logout():
     session.clear()
     flash('You have been logged out.', 'info')
     return redirect(url_for('book.index'))
+
